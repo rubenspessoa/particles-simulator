@@ -5,6 +5,7 @@ Created on 18/11/2014
 '''
 
 import pygame, math
+from Util.Main import addVectors
 from twisted.conch.test.test_helper import WIDTH
 
 class Particle():
