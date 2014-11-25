@@ -17,17 +17,19 @@
 #
 
 from Physics.Environment         import Environment
-import pygame 
+import pygame, math
 
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Physics One')
 env = Environment((width, height))
+env.addFunctions(['move', 'accelerate', 'bounce', 'drag', 'collide'])
+env.acceleration = (math.pi, 0.02)
 env.addParticles(5)
 selected_particle = None
 
 running = True
-
+paused = False
 while running:
     for event in pygame.event.get():
         
@@ -38,12 +40,17 @@ while running:
             selected_particle = env.findParticle(mouseX, mouseY)
         elif event.type == pygame.MOUSEBUTTONUP:
             selected_particle = None
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                paused = (True, False)[paused]
             
     if selected_particle:
         (mouseX, mouseY) = pygame.mouse.get_pos()
         selected_particle.mouseMove((mouseX, mouseY))
-            
-    env.update()
+    
+    if not paused:
+        env.update()
+        
     screen.fill(env.colour)
     
     for p in env.particles:

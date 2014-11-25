@@ -31,17 +31,19 @@ class Particle():
         self.speed = 0
         self.angle = 0
         self.mass = mass
-        self.drag = 0.99
-        self.elasticity = 0.75
+        self.drag = 1
+        self.elasticity = 0.9
 
-    def move(self):
-        # Gravidade 
-        (self.angle, self.speed) = addVectors((self.angle, self.speed), gravity)
+    def accelerate(self, vector):
+        (self.angle, self.speed) = addVectors((self.angle, self.speed), vector)
+    
+    def experienceDrag(self):
+        self.speed *= self.drag
         
+    def move(self):
         self.x += math.sin(self.angle) * self.speed
         self.y -= math.cos(self.angle) * self.speed
         self.speed *= self.drag
-        print self.speed
     
     def mouseMove(self, (x, y)):
         dx = x - self.x

@@ -18,7 +18,7 @@
 
 import random, math
 from Physics.Particle import Particle
-from Physics.Util import collide, elasticity
+from Physics.Util import addVectors
 
 class Environment:
     
@@ -26,10 +26,21 @@ class Environment:
         self.width = width
         self.height = height
         self.particles = []
+        self.particle_functions1 = []
+        self.particle_functions2 = []
+        
+        self.function_dict = {
+            'move': (1, lambda p: p.move()),
+            'drag': (1, lambda p: p.experienceDrag()),
+            'bounce': (1, lambda p: self.bounce(p)),
+            'accelerate': (1, lambda p: p.accelerate(self.acceleration)),
+            'collide': (2, lambda p1, p2: self.collide(p1, p2))
+        }
         
         self.colour = (255,255,255)
         self.mass_of_air = 0.02
-        self.elasticity = elasticity
+        self.elasticity = 0.75
+        self.acceleration = (0,0)
         
     def addParticles(self, n=1, **kargs):
         for i in range(n):
@@ -46,12 +57,24 @@ class Environment:
             
             self.particles.append(p)
     
+    def addFunctions(self, function_list):
+        
+        for func in function_list:
+            (n, f) = self.function_dict.get(func, (-1, None))
+            if n == 1:
+                self.particle_functions1.append(f)
+            elif n == 2:
+                self.particle_functions2.append(f)
+            else:
+                print "No such function: %s" % f
+        
     def update(self):
         for i, particle in enumerate(self.particles):
-            particle.move()
-            self.bounce(particle)
+            for f in self.particle_functions1:
+                f(particle)
             for particle2 in self.particles[i+1:]:
-                collide(particle, particle2)
+                for f in self.particle_functions2:
+                    f(particle, particle2)
     
     def bounce(self, particle):
         if particle.x > self.width - particle.size:
@@ -79,3 +102,27 @@ class Environment:
             if math.hypot(p.x - x, p.y - y) <= p.size:
                 return p
         return None
+    
+    def collide(self, p1, p2):
+        dx = p1.x - p2.x
+        dy = p1.y - p2.y
+        distance = math.hypot(dx, dy)
+        
+        if distance < p1.size + p2.size:
+            angle = math.atan2(dy, dx) + 0.5 * math.pi
+            total_mass = p1.mass + p2.mass
+            
+            (p1.angle, p1.speed) = addVectors((p1.angle, p1.speed * (p1.mass - p2.mass)/total_mass), 
+                                              (angle, 2*p2.speed*p2.mass/total_mass))
+            (p2.angle, p2.speed) = addVectors((p2.angle, p2.speed * (p2.mass - p1.mass)/total_mass), 
+                                              (angle + math.pi, 2*p1.speed*p1.mass/total_mass))
+            
+            elasticity = p1.elasticity * p2.elasticity
+            p1.speed *= elasticity
+            p2.speed *= elasticity
+            
+            overlap = 0.5 * (p1.size + p2.size - distance + 1)
+            p1.x += math.sin(angle)*overlap
+            p1.y -= math.cos(angle)*overlap
+            p2.x -= math.sin(angle)*overlap
+            p2.y += math.cos(angle)*overlap
