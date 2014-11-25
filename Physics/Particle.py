@@ -1,4 +1,4 @@
-#     A game developed with Python based on physics concepts. 
+# A game developed with Python based on physics concepts.
 #     Copyright (C) 2014 - Author: Rubens Pessoa de Barros Filho
 # 
 #     This program is free software; you can redistribute it and/or modify
@@ -16,10 +16,11 @@
 #     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-from Physics.Util import addVectors
+from Physics.Util import add_vectors
 import math
 
 gravity = (math.pi, 0.02)
+
 
 class Particle():
     def __init__(self, (x, y), size, mass=1):
@@ -35,19 +36,18 @@ class Particle():
         self.elasticity = 0.9
 
     def accelerate(self, vector):
-        (self.angle, self.speed) = addVectors((self.angle, self.speed), vector)
-    
-    def experienceDrag(self):
+        (self.angle, self.speed) = add_vectors((self.angle, self.speed), vector)
+
+    def experience_drag(self):
         self.speed *= self.drag
-        
+
     def move(self):
         self.x += math.sin(self.angle) * self.speed
         self.y -= math.cos(self.angle) * self.speed
         self.speed *= self.drag
-    
-    def mouseMove(self, (x, y)):
+
+    def mouse_move(self, (x, y)):
         dx = x - self.x
         dy = y - self.y
         self.angle = 0.5 * math.pi + math.atan2(dy, dx)
         self.speed = math.hypot(dx, dy) * 0.1
-        

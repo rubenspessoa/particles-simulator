@@ -1,4 +1,4 @@
-#     A game developed with Python based on physics concepts. 
+# A game developed with Python based on physics concepts.
 #     Copyright (C) 2014 - Author: Rubens Pessoa de Barros Filho
 # 
 #     This program is free software; you can redistribute it and/or modify
@@ -17,20 +17,20 @@
 #
 import math
 
+
 class Spring:
     def __init__(self, p1, p2, length=50, strength=0.5):
         self.p1 = p1
         self.p2 = p2
         self.length = length
         self.strength = strength
-        
+
     def update(self):
         dx = self.p1.x - self.p2.x
         dy = self.p1.y - self.p2.y
         dist = math.hypot(dx, dy)
         theta = math.atan2(dy, dx)
         force = (self.length - dist) * self.strength
-        
-        self.p1.accelerate((theta + 0.5 * math.pi, force/self.p1.mass))
-        self.p2.accelerate((theta - 0.5 * math.pi, force/self.p2.mass))
-        
+
+        self.p1.accelerate((theta + 0.5 * math.pi, force / self.p1.mass))
+        self.p2.accelerate((theta - 0.5 * math.pi, force / self.p2.mass))

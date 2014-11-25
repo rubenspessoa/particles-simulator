@@ -16,20 +16,21 @@
 #     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-from Physics.Environment         import Environment
-import pygame, math
+from Physics.Environment import Environment
+import pygame
+import math
 
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Physics One')
 env = Environment((width, height))
-env.addFunctions(['move', 'accelerate', 'bounce', 'drag', 'collide'])
+env.add_functions(['move', 'accelerate', 'bounce', 'drag', 'collide'])
 env.acceleration = (math.pi, 0.02)
-env.addParticles(3)
+env.add_particles(3)
 
-env.addSprings(0, 1)
-env.addSprings(1, 2)
-env.addSprings(2, 0)
+env.add_springs(0, 1)
+env.add_springs(1, 2)
+env.add_springs(2, 0)
 
 selected_particle = None
 
@@ -42,7 +43,7 @@ while running:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             (mouseX, mouseY) = pygame.mouse.get_pos()
-            selected_particle = env.findParticle(mouseX, mouseY)
+            selected_particle = env.find_particle(mouseX, mouseY)
         elif event.type == pygame.MOUSEBUTTONUP:
             selected_particle = None
         elif event.type == pygame.KEYDOWN:
@@ -51,7 +52,7 @@ while running:
             
     if selected_particle:
         (mouseX, mouseY) = pygame.mouse.get_pos()
-        selected_particle.mouseMove((mouseX, mouseY))
+        selected_particle.mouse_move((mouseX, mouseY))
     
     if not paused:
         env.update()
@@ -62,6 +63,6 @@ while running:
         pygame.draw.circle(screen, p.colour, (int(p.x), int(p.y)), p.size, p.thickness)
         
     for s in env.springs:
-        pygame.draw.aaline(screen, (0,0,0), (int(s.p1.x), int(s.p1.y)), (int(s.p2.x), int(s.p2.y)))
+        pygame.draw.aaline(screen, (0, 0, 0), (int(s.p1.x), int(s.p1.y)), (int(s.p2.x), int(s.p2.y)))
         
     pygame.display.flip()
