@@ -23,6 +23,25 @@ def findParticle(particles, x, y):
             return p
     return None
 
+def collide(p1, p2):
+    dx = p1.x - p2.x
+    dy = p1.y - p2.y
+    
+    distance = math.hypot(dx, dy)
+    if distance < p1.size + p2.size:
+        tangent = math.atan2(dy, dx)
+        p1.angle = 2 * tangent - p1.angle
+        p2.angle = 2 * tangent - p2.angle
+        (p1.speed, p2.speed) = (p2.speed, p1.speed)
+        p1.speed *= elasticity
+        p2.speed *= elasticity
+        
+        angle = 0.5 * math.pi + tangent
+        p1.x += math.sin(angle)
+        p1.y -= math.cos(angle)
+        p2.x -= math.sin(angle)
+        p2.y += math.cos(angle)
+
 class Particle():
     def __init__(self, (x, y), size):
         self.x = x
@@ -103,10 +122,11 @@ while running:
         selected_particle.angle = math.atan2(dy, dx) + 0.5 * math.pi
         selected_particle.speed = math.hypot(dx, dy) * 0.5
                 
-    for particle in my_particles:
-        if particle != selected_particle:
-            particle.move()
-            particle.bounce()
+    for i, particle in enumerate(my_particles):
+        particle.move()
+        particle.bounce()
+        for particle2 in my_particles[i+1:]:
+            collide(particle, particle2)
         particle.display()
             
     pygame.display.flip()
