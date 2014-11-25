@@ -16,20 +16,21 @@
 #     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-from Physics.Environment import Environment
+from Physics.Environment         import Environment
 import pygame 
 
-background_colour = (255,255,255)
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Physics One')
 env = Environment((width, height))
-env.addParticles(1)
+env.addParticles(5)
 selected_particle = None
 
 running = True
+
 while running:
     for event in pygame.event.get():
+        
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
