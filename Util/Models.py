@@ -1,46 +1,16 @@
-'''
-Created on 18/11/2014
-
-@author: rubenspessoa
-'''
-
-import pygame, math
-from Util.Main import addVectors
-from twisted.conch.test.test_helper import WIDTH
-
-class Particle():
-    def __init__(self, (x, y), size):
-        
-        self.x          = x
-        self.y          = y
-        self.size       = size
-        self.color      = (0,0,255)
-        self.thickness  = 1
-        self.speed      = 0
-        self.angle      = 0
-
-    def display(self, screen):
-        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.size, self.thickness)
-    
-    def move(self):
-        (self.angle, self.speed) = addVectors((self.angle, self.speed), gravity)
-        self.x += math.cos(self.angle) * self.speed
-        self.y -= math.sin(self.angle) * self.speed
-        
-    def bounce(self, width, height):
-        
-        if self.x > width - self.size:
-            self.x = 2*(width - self.size) - self.x
-            self.angle = - self.angle
-    
-        elif self.x < self.size:
-            self.x = 2*self.size - self.x
-            self.angle = - self.angle
-    
-        if self.y > height - self.size:
-            self.y = 2*(height - self.size) - self.y
-            self.angle = math.pi - self.angle
-    
-        elif self.y < self.size:
-            self.y = 2*self.size - self.y
-            self.angle = math.pi - self.angle
+#     A game developed with Python based on physics concepts. 
+#     Copyright (C) 2014 - Author: Rubens Pessoa de Barros Filho
+# 
+#     This program is free software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation; either version 2 of the License, or
+#     (at your option) any later version.
+# 
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+# 
+#     You should have received a copy of the GNU General Public License along
+#     with this program; if not, write to the Free Software Foundation, Inc.,
+#     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
