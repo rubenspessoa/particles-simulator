@@ -25,7 +25,12 @@ pygame.display.set_caption('Physics One')
 env = Environment((width, height))
 env.addFunctions(['move', 'accelerate', 'bounce', 'drag', 'collide'])
 env.acceleration = (math.pi, 0.02)
-env.addParticles(5)
+env.addParticles(3)
+
+env.addSprings(0, 1)
+env.addSprings(1, 2)
+env.addSprings(2, 0)
+
 selected_particle = None
 
 running = True
@@ -55,5 +60,8 @@ while running:
     
     for p in env.particles:
         pygame.draw.circle(screen, p.colour, (int(p.x), int(p.y)), p.size, p.thickness)
+        
+    for s in env.springs:
+        pygame.draw.aaline(screen, (0,0,0), (int(s.p1.x), int(s.p1.y)), (int(s.p2.x), int(s.p2.y)))
         
     pygame.display.flip()

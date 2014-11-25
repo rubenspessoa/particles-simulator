@@ -18,6 +18,7 @@
 
 import random, math
 from Physics.Particle import Particle
+from Physics.Spring import Spring
 from Physics.Util import addVectors
 
 class Environment:
@@ -26,9 +27,9 @@ class Environment:
         self.width = width
         self.height = height
         self.particles = []
+        self.springs = []
         self.particle_functions1 = []
         self.particle_functions2 = []
-        
         self.function_dict = {
             'move': (1, lambda p: p.move()),
             'drag': (1, lambda p: p.experienceDrag()),
@@ -57,6 +58,9 @@ class Environment:
             
             self.particles.append(p)
     
+    def addSprings(self, p1, p2, length=50, strength=0.5):
+        self.springs.append(Spring(self.particles[p1], self.particles[p2], length, strength))
+        
     def addFunctions(self, function_list):
         
         for func in function_list:
@@ -75,6 +79,8 @@ class Environment:
             for particle2 in self.particles[i+1:]:
                 for f in self.particle_functions2:
                     f(particle, particle2)
+        for spring in self.springs:
+            spring.update()
     
     def bounce(self, particle):
         if particle.x > self.width - particle.size:
