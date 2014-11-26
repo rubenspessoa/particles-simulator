@@ -44,7 +44,6 @@ class Particle():
     def move(self):
         self.x += math.sin(self.angle) * self.speed
         self.y -= math.cos(self.angle) * self.speed
-        self.speed *= self.drag
 
     def mouse_move(self, (x, y)):
         dx = x - self.x
