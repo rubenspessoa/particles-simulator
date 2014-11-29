@@ -51,3 +51,30 @@ def collide(p1, p2):
         p1.y -= math.cos(angle) * overlap
         p2.x -= math.sin(angle) * overlap
         p2.y += math.cos(angle) * overlap
+
+
+def lennard_jones(p1, p2):
+    dx = p1.x - p2.x
+    dy = p1.y - p2.y
+    distance = math.hypot(dx, dy)
+
+    null_interparticle_potential = 20
+    depth_potential = 2.5 * null_interparticle_potential
+
+    if distance < depth_potential:
+
+        angle = math.atan2(dy, dx)
+        force = - depth_potential/61.3
+
+        if distance < null_interparticle_potential:
+            p1.accelerate((angle + 0.5 * math.pi, force))
+            p2.accelerate((angle - 0.5 * math.pi, force))
+        elif distance > null_interparticle_potential:
+            p1.accelerate((angle - 0.5 * math.pi, force))
+            p2.accelerate((angle + 0.5 * math.pi, force))
+
+        p1.x += math.sin(angle)
+        p1.y -= math.cos(angle)
+        p2.x -= math.sin(angle)
+        p2.y += math.cos(angle)
+

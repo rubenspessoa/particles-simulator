@@ -20,7 +20,7 @@ import random
 import math
 from Physics.Particle import Particle
 from Physics.Spring import Spring
-from Physics.Util import collide
+from Physics.Util import collide, lennard_jones
 
 
 class Environment:
@@ -37,23 +37,25 @@ class Environment:
             'drag': (1, lambda p: p.experience_drag()),
             'bounce': (1, lambda p: self.bounce(p)),
             'accelerate': (1, lambda p: p.accelerate(self.acceleration)),
-            'collide': (2, lambda p1, p2: collide(p1, p2))
+            'collide': (2, lambda p1, p2: collide(p1, p2)),
+            'lennard_jones': (2, lambda p1, p2: lennard_jones(p1, p2))
         }
 
         self.colour = (255, 255, 255)
-        self.mass_of_water = 0.5
+        self.mass_of_water = 0
         self.mass_of_air = 0.02
         self.elasticity = 0.75
         self.acceleration = (0, 0)
 
     def add_particles(self, n=1, **kargs):
         for i in range(n):
-            size = kargs.get('size', random.randint(30, 50))
-            mass = kargs.get('mass', random.randint(100, 10000))
+            #size = kargs.get('size', random.randint(30, 50))
+            size = 20
+            #mass = kargs.get('mass', random.randint(100, 10000))
             x = kargs.get('x', random.uniform(size, self.width - size))
             y = kargs.get('y', random.uniform(size, self.height - size))
 
-            p = Particle((x, y), size, mass)
+            p = Particle((x, y), size)
             p.speed = kargs.get('speed', random.random())
             p.angle = kargs.get('angle', random.uniform(0, math.pi * 2))
             p.colour = kargs.get('colour', (0, 0, 0))
@@ -85,11 +87,12 @@ class Environment:
             for particle2 in self.particles[i + 1:]:
                 for f in self.particle_functions2:
                     f(particle, particle2)
+
         for spring in self.springs:
             spring.update()
 
     def bounce(self, particle):
-        # Para condições Periódicas de Contorno utilize essas condições:
+        # Para condicoes Periodicas de Contorno:
         #
         # if particle.x > self.width - particle.size:
         #     particle.x = particle.size
