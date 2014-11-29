@@ -73,8 +73,4 @@ def lennard_jones(p1, p2):
             p1.accelerate((angle - 0.5 * math.pi, force))
             p2.accelerate((angle + 0.5 * math.pi, force))
 
-        p1.x += math.sin(angle)
-        p1.y -= math.cos(angle)
-        p2.x -= math.sin(angle)
-        p2.y += math.cos(angle)
 
