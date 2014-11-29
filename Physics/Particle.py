@@ -30,9 +30,9 @@ class Particle():
         self.colour = (0, 0, 255)
         self.thickness = 5
         self.speed = 0
-        self.angle = 0
         self.mass = mass
-        self.drag = 1
+        self.angle = 0
+        self.drag = 0.7
         self.elasticity = 0.9
 
     def accelerate(self, vector):

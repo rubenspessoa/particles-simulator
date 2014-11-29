@@ -41,6 +41,7 @@ class Environment:
         }
 
         self.colour = (255, 255, 255)
+        self.mass_of_water = 0.5
         self.mass_of_air = 0.02
         self.elasticity = 0.75
         self.acceleration = (0, 0)
@@ -56,7 +57,10 @@ class Environment:
             p.speed = kargs.get('speed', random.random())
             p.angle = kargs.get('angle', random.uniform(0, math.pi * 2))
             p.colour = kargs.get('colour', (0, 0, 0))
-            p.drag = (p.mass / (p.mass + self.mass_of_air)) ** p.size
+
+            # Set self.mass_of_... according with the environment you want to simulate.
+
+            p.drag = (p.mass / (p.mass + self.mass_of_water)) ** p.size
 
             self.particles.append(p)
 
@@ -85,6 +89,25 @@ class Environment:
             spring.update()
 
     def bounce(self, particle):
+        # Para condições Periódicas de Contorno utilize essas condições:
+        #
+        # if particle.x > self.width - particle.size:
+        #     particle.x = particle.size
+        #     particle.angle = particle.angle
+        #
+        # elif particle.x < particle.size:
+        #     particle.x = self.width - particle.size
+        #     particle.angle = particle.angle
+        #
+        # if particle.y > self.height - particle.size:
+        #     particle.y = particle.size
+        #     particle.angle = particle.angle
+        #
+        # elif particle.y < particle.size:
+        #     particle.y = self.height - particle.size
+        #     particle.angle = particle.angle
+        #
+
         if particle.x > self.width - particle.size:
             particle.x = 2 * (self.width - particle.size) - particle.x
             particle.angle = - particle.angle

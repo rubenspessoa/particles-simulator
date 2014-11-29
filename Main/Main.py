@@ -26,23 +26,24 @@ pygame.display.set_caption('Physics One')
 env = Environment((width, height))
 env.add_functions(['move', 'accelerate', 'bounce', 'drag', 'collide'])
 env.acceleration = (math.pi, 0.02)
-env.add_particles(5)
+env.add_particles(10)
 
-env.add_springs(0, 1)
-env.add_springs(1, 2)
-env.add_springs(1, 4)
-env.add_springs(2, 0)
-env.add_springs(2, 4)
-env.add_springs(1, 3)
-env.add_springs(2, 3)
-env.add_springs(0, 3)
-env.add_springs(3, 4)
-env.add_springs(4, 0)
+env.add_springs(0, 1, length=200, strength=10)
+env.add_springs(1, 2, length=200, strength=10)
+env.add_springs(1, 4, length=200, strength=10)
+env.add_springs(2, 0, length=200, strength=10)
+env.add_springs(2, 4, length=200, strength=10)
+env.add_springs(1, 3, length=200, strength=10)
+env.add_springs(2, 3, length=200, strength=10)
+env.add_springs(0, 3, length=200, strength=10)
+env.add_springs(3, 4, length=200, strength=10)
+env.add_springs(4, 0, length=200, strength=10)
 
 selected_particle = None
 
 running = True
 paused = False
+
 while running:
     for event in pygame.event.get():
         

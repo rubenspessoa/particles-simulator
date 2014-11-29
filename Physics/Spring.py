@@ -19,7 +19,7 @@ import math
 
 
 class Spring:
-    def __init__(self, p1, p2, length=50, strength=0.5):
+    def __init__(self, p1, p2, length=100, strength=0.9):
         self.p1 = p1
         self.p2 = p2
         self.length = length
