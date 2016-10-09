@@ -49,8 +49,8 @@ class Environment:
 
     def add_particles(self, n=1, **kargs):
         for i in range(n):
-            #size = kargs.get('size', random.randint(30, 50))
-            size = 20
+            size = kargs.get('size', random.randint(30, 50))
+            #size = 20
             #mass = kargs.get('mass', random.randint(100, 10000))
             x = kargs.get('x', random.uniform(size, self.width - size))
             y = kargs.get('y', random.uniform(size, self.height - size))

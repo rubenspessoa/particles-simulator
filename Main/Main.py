@@ -24,12 +24,13 @@ import math
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Classical Mechanics')
 env = Environment(width, height)
-env.add_functions(['move', 'bounce', 'drag', 'lennard_jones', 'collide'])
+env.add_functions(['move', 'bounce', 'drag', 'collide'])
 env.acceleration = (math.pi, 0.02)
 env.add_particles(6)
-for i in range(6):
-    for j in range(6):
-        env.add_springs(i, j, 200, 0.01)
+
+#for i in range(6):
+#    for j in range(6):
+#        env.add_springs(i, j, 200, 0.01)
 
 
 selected_particle = None
