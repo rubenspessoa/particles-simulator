@@ -23,10 +23,13 @@ import math
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Physics One')
-env = Environment((width, height))
+env = Environment(width, height)
 env.add_functions(['move', 'bounce', 'drag', 'lennard_jones', 'collide'])
 env.acceleration = (math.pi, 0.02)
-env.add_particles(2)
+env.add_particles(6)
+for i in range(6):
+    for j in range(6):
+        env.add_springs(i, j, 200, 0.01)
 
 
 selected_particle = None
@@ -48,8 +51,8 @@ while running:
                 paused = (True, False)[paused]
             
     if selected_particle:
-        (mouseX, mouseY) = pygame.mouse.get_pos()
-        selected_particle.mouse_move((mouseX, mouseY))
+        mouseX, mouseY = pygame.mouse.get_pos()
+        selected_particle.mouse_move(mouseX, mouseY)
     
     if not paused:
         env.update()

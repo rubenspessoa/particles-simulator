@@ -23,7 +23,7 @@ gravity = (math.pi, 0.02)
 
 
 class Particle():
-    def __init__(self, (x, y), size, mass=1):
+    def __init__(self, x, y, size, mass=1):
         self.x = x
         self.y = y
         self.size = size
@@ -36,7 +36,8 @@ class Particle():
         self.elasticity = 0.9
 
     def accelerate(self, vector):
-        (self.angle, self.speed) = add_vectors((self.angle, self.speed), vector)
+        angle1, speed = vector
+        self.angle, self.speed = add_vectors(self.angle, self.speed, angle1, speed)
 
     def experience_drag(self):
         self.speed *= self.drag
@@ -45,7 +46,7 @@ class Particle():
         self.x += math.sin(self.angle) * self.speed
         self.y -= math.cos(self.angle) * self.speed
 
-    def mouse_move(self, (x, y)):
+    def mouse_move(self, x, y):
         dx = x - self.x
         dy = y - self.y
         self.angle = 0.5 * math.pi + math.atan2(dy, dx)

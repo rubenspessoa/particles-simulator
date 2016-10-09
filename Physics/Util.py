@@ -19,7 +19,7 @@
 import math
 
 
-def add_vectors((angle1, length1), (angle2, length2)):
+def add_vectors(angle1, length1, angle2, length2):
     x = math.sin(angle1) * length1 + math.sin(angle2) * length2
     y = math.cos(angle1) * length1 + math.cos(angle2) * length2
 
@@ -37,10 +37,10 @@ def collide(p1, p2):
         angle = math.atan2(dy, dx) + 0.5 * math.pi
         total_mass = p1.mass + p2.mass
 
-        (p1.angle, p1.speed) = add_vectors((p1.angle, p1.speed * (p1.mass - p2.mass) / total_mass),
-                                          (angle, 2 * p2.speed * p2.mass / total_mass))
-        (p2.angle, p2.speed) = add_vectors((p2.angle, p2.speed * (p2.mass - p1.mass) / total_mass),
-                                          (angle + math.pi, 2 * p1.speed * p1.mass / total_mass))
+        p1.angle, p1.speed = add_vectors(p1.angle, p1.speed * (p1.mass - p2.mass) / total_mass,
+                                          angle, 2 * p2.speed * p2.mass / total_mass)
+        p2.angle, p2.speed = add_vectors(p2.angle, p2.speed * (p2.mass - p1.mass) / total_mass,
+                                          angle + math.pi, 2 * p1.speed * p1.mass / total_mass)
 
         elasticity = p1.elasticity * p2.elasticity
         p1.speed *= elasticity

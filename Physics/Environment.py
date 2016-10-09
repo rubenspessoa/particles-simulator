@@ -25,7 +25,7 @@ from Physics.Util import collide, lennard_jones
 
 class Environment:
 
-    def __init__(self, (width, height)):
+    def __init__(self, width, height):
         self.width = width
         self.height = height
         self.particles = []
@@ -55,7 +55,7 @@ class Environment:
             x = kargs.get('x', random.uniform(size, self.width - size))
             y = kargs.get('y', random.uniform(size, self.height - size))
 
-            p = Particle((x, y), size)
+            p = Particle(x, y, size)
             p.speed = kargs.get('speed', random.random())
             p.angle = kargs.get('angle', random.uniform(0, math.pi * 2))
             p.colour = kargs.get('colour', (0, 0, 0))
@@ -78,7 +78,7 @@ class Environment:
             elif n == 2:
                 self.particle_functions2.append(f)
             else:
-                print "No such function: %s" % f
+                print ("No such function: %s" % f)
 
     def update(self):
         for i, particle in enumerate(self.particles):
