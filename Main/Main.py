@@ -22,7 +22,7 @@ import math
 
 (width, height) = (800, 600)
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption('Physics One')
+pygame.display.set_caption('Classical Mechanics')
 env = Environment(width, height)
 env.add_functions(['move', 'bounce', 'drag', 'lennard_jones', 'collide'])
 env.acceleration = (math.pi, 0.02)
