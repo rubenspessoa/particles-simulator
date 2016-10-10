@@ -1,6 +1,6 @@
 # particles-simulator
 
-  A game developed with python and pygame based on classical mechanics concepts.
+  A game developed with python and pygame based on classical mechanics concepts. Following this tutorial: http://www.petercollingridge.co.uk/pygame-physics-simulation
  
 ## How to run it?
 
