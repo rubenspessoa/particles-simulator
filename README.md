@@ -19,11 +19,4 @@ Very soon!
 
 ![alt springs](https://github.com/rubenspessoa/particles-simulator/blob/master/images/1.png)
 ![alt springs](https://github.com/rubenspessoa/particles-simulator/blob/master/images/2.png)
-
-## Youtube
-
-Very soon!
-
-
-
   
