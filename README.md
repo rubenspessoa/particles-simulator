@@ -11,10 +11,6 @@
   * via **brew install pygame**
 3. Run Main.py file on you favorite IDE.
 
-## How to setup?
-
-Very soon!
-
 ## Images
 
 ![alt springs](https://github.com/rubenspessoa/particles-simulator/blob/master/images/1.png)
